@@ -103,4 +103,10 @@ const logoutUser = asyncHandler(async (req, res) => {
     res.status(200).json({message: "Logout successful."})
 })
 
-export { addUser, loginUser, logoutUser }
+const getAllUsers = asyncHandler(async (req, res) => {
+    // Get all Users
+    const users = await User.find({})
+    res.json(users)
+})
+
+export { addUser, loginUser, logoutUser, getAllUsers }
