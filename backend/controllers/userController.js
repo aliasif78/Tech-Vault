@@ -42,7 +42,7 @@ const addUser = asyncHandler(async (req, res) => {
     try {
         // Save the User to the Database
         await newUser.save()
-        
+
         // Generate a Cookie
         generateToken(res, newUser._id)
 
@@ -57,4 +57,50 @@ const addUser = asyncHandler(async (req, res) => {
     }
 })
 
-export { addUser }
+const loginUser = asyncHandler(async (req, res) => {
+
+    // Get the entered Email and Password
+    const { email, password } = req.body
+
+    // User exists, check the Password
+    try {
+        // Check if the User exists
+        const userExists = await User.findOne({ email })
+
+        if (userExists) {
+            const isPasswordValid = await bcrypt.compare(password, userExists.password)
+
+            // Password is valid, Login
+            if (isPasswordValid) {
+
+                // Generate a Cookie
+                generateToken(res, userExists._id)
+
+                // Send a Successful Response Status
+                res.status(201).json({ _id: userExists._id, username: userExists.username, email: userExists.email, isAdmin: userExists.isAdmin })
+
+                // Allow User to be Logged In now
+                return
+            }
+        }
+    }
+
+    // Throw an Error if anything unexpected happens
+    catch (error) {
+        res.status(400)
+        throw new Error("Invalid information provided")
+    }
+})
+
+const logoutUser = asyncHandler(async (req, res) => {
+
+    // Remove the Cookie
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0)
+    })
+
+    res.status(200).json({message: "Logout successful."})
+})
+
+export { addUser, loginUser, logoutUser }
