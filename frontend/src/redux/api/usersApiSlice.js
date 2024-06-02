@@ -5,9 +5,9 @@ import { USERS_URL } from '../constants.js'
 // Result : http://localhost:5000/api/users/auth
 // This is the same route as the login route defined in the userRoutes.js 
 export const userApiSlice = apiSlice.injectEndpoints({
-    endpoints: (builder) => {
+    endpoints: (builder) => ({
         // Use mutation when providing data to the login
-        login = builder.mutation({
+        login: builder.mutation({
             query: (data) => {
                 url: `${USERS_URL}/auth`
                 method: 'POST'
@@ -17,9 +17,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
         // Use query when providing no data to the login
         // login = builder.query
-    }
+    })
 })
 
 // userLoginMutation is being used because of `use${Login}Mutation`
 // Login is the name of the endpoint and Mutation is the method being used
-export const useLoginMutation = userApiSlice
+export const { useLoginMutation } = userApiSlice

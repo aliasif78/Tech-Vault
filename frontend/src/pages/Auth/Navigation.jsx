@@ -6,7 +6,13 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import './Navigation.css'
 
+// useSelector allows to access the Redux state
+import { useSelector, useDispatch } from 'react-redux'
+import { useLoginMutation } from '../../redux/api/usersApiSlice'
+import { logout } from '../../redux/features/auth/authSlice'
+
 export const Navigation = () => {
+    const userInfo = useSelector(state => state.auth)
     const [dropDownOpen, setDropDownOpen] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
 
@@ -20,6 +26,30 @@ export const Navigation = () => {
 
     const closeSidebar = () => {
         setShowSidebar(false)
+    }
+
+    // Dispatches actions to the Redux store
+    const dispatch = useDispatch()
+
+    // To Navigate to other Pages
+    const navigate = useNavigate()
+    const { logoutApiCall } = useLoginMutation()
+
+    const logoutHandler = async () => {
+        try {
+            // Unwrapping allows us to handle success and errors
+            await logoutApiCall().unwrap()
+
+            // Call the logout function in the authSlice reducer 
+            dispatch(logout())
+
+            // Navigate to the login page after successfully logging out
+            navigate("./login")
+        }
+
+        catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -56,6 +86,12 @@ export const Navigation = () => {
 
                     <span className="hidden nav-item-name">Favourite</span>{" "}
                 </Link>
+            </div>
+
+            <div className="relative">
+                <button onClick={() => toggleDropDown} className='flex items-center text-neutral-800 focus:outline-none'>
+                    {userInfo ? <span className='text-white'>{userInfo.username}</span> : <></>}
+                </button>
             </div>
 
             <ul>
