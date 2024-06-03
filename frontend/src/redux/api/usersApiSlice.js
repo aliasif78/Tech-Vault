@@ -13,13 +13,20 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data
             })
-        })
+        }),
 
         // Use query when providing no data to the login
         // login = builder.query
+
+        logout: builder.mutation({
+            query: () => ({
+                url: `${USERS_URL}/logout`,
+                method: 'POST'
+            })
+        })
     })
 })
 
 // userLoginMutation is being used because of `use${Login}Mutation`
 // Login is the name of the endpoint and Mutation is the method being used
-export const { useLoginMutation } = userApiSlice
+export const { useLoginMutation, useLogoutMutation } = userApiSlice

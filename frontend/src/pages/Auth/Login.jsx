@@ -26,6 +26,7 @@ const login = () => {
     useEffect(() => {
         if (userInfo) {
             navigate(redirect)
+            console.log(userInfo)
         }
     }, [navigate, redirect, userInfo])
 

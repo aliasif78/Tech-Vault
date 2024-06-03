@@ -1,6 +1,7 @@
 // import React from 'react'
-import { useState } from 'react'
-import { AiOutlineHome, AiOutlineShopping, AiOutlineLogin, AiOutlineUserAdd, AiOutlineShoppingCart } from 'react-icons/ai'
+import { useState, useEffect } from 'react'
+import { AiOutlineHome, AiOutlineShopping, AiOutlineLogin, AiOutlineUserAdd, AiOutlineShoppingCart, AiOutlineDropbox } from 'react-icons/ai'
+import { IoIosArrowDown } from "react-icons/io";
 import { FaHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +9,7 @@ import './Navigation.css'
 
 // useSelector allows to access the Redux state
 import { useSelector, useDispatch } from 'react-redux'
-import { useLoginMutation } from '../../redux/api/usersApiSlice'
+import { useLogoutMutation } from '../../redux/api/usersApiSlice'
 import { logout } from '../../redux/features/auth/authSlice'
 
 export const Navigation = () => {
@@ -33,7 +34,7 @@ export const Navigation = () => {
 
     // To Navigate to other Pages
     const navigate = useNavigate()
-    const { logoutApiCall } = useLoginMutation()
+    const [logoutApiCall] = useLogoutMutation()
 
     const logoutHandler = async () => {
         try {
@@ -89,32 +90,69 @@ export const Navigation = () => {
             </div>
 
             <div className="relative">
-                <button onClick={() => toggleDropDown} className='flex items-center text-neutral-800 focus:outline-none'>
-                    {userInfo ? <span className='text-white'>{userInfo.username}</span> : <></>}
+                <button onClick={toggleDropDown} className='flex items-center text-neutral-800 focus:outline-none'>
+                    {userInfo.userInfo ? <span className='text-white'>{userInfo.userInfo.username}</span> : <></>}
+
+                    {userInfo.userInfo && <IoIosArrowDown className='text-white ml-1 mt-1' />}
                 </button>
+
+                {dropDownOpen && userInfo.userInfo && (
+                    <ul className={`absolute right-0 mt-2 mr-14 space-y-2 bg-white text-gray-600 ${!userInfo.userInfo.isAdmin ? '-top-20' : '-top-80'}`}>
+
+                        {userInfo.userInfo.isAdmin && (
+                            <>
+                                <li>
+                                    <Link to='/admin/dashboard' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Dashboard</Link>
+                                </li>
+
+                                <li>
+                                    <Link to='/admin/productlist' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Products</Link>
+                                </li>
+
+                                <li>
+                                    <Link to='/admin/categorylist' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Catrgories</Link>
+                                </li>
+
+                                <li>
+                                    <Link to='/admin/orderlist' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Orders</Link>
+                                </li>
+                            </>
+                        )}
+
+                        <li>
+                            <Link to='/admin/profile' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Profile</Link>
+                        </li>
+
+                        <li>
+                            <Link className='block px-4 py-2 hover:bg-neutral-400 hover:text-black' onClick={logoutHandler}>Logout</Link>
+                        </li>
+                    </ul>
+                )}
             </div>
 
-            <ul>
-                <li>
-                    <Link to='/login' className='flex items-center transition-transform transform hover:translate-x-2'>
-                        <div className="w-10 h-10 mr-2 flex justify-center items-center">
-                            <AiOutlineLogin className='size-5' />
-                        </div>
+            {!userInfo.userInfo && (
+                <ul>
+                    <li>
+                        <Link to='/login' className='flex items-center transition-transform transform hover:translate-x-2'>
+                            <div className="w-10 h-10 mr-2 flex justify-center items-center">
+                                <AiOutlineLogin className='size-5' />
+                            </div>
 
-                        <span className="hidden nav-item-name">Login</span>{" "}
-                    </Link>
-                </li>
+                            <span className="hidden nav-item-name">Login</span>{" "}
+                        </Link>
+                    </li>
 
-                <li>
-                    <Link to='/register' className='flex items-center transition-transform transform hover:translate-x-2'>
-                        <div className="w-10 h-10 mr-2 flex justify-center items-center">
-                            <AiOutlineUserAdd className='size-5' />
-                        </div>
+                    <li>
+                        <Link to='/register' className='flex items-center transition-transform transform hover:translate-x-2'>
+                            <div className="w-10 h-10 mr-2 flex justify-center items-center">
+                                <AiOutlineUserAdd className='size-5' />
+                            </div>
 
-                        <span className="hidden nav-item-name">Register</span>{" "}
-                    </Link>
-                </li>
-            </ul>
+                            <span className="hidden nav-item-name">Register</span>{" "}
+                        </Link>
+                    </li>
+                </ul>
+            )}
         </div>
     )
 } 
