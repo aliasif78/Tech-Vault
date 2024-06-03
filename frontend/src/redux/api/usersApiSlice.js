@@ -23,10 +23,18 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 url: `${USERS_URL}/logout`,
                 method: 'POST'
             })
+        }),
+
+        register: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}`,
+                method: 'POST',
+                body: data
+            })
         })
     })
 })
 
 // userLoginMutation is being used because of `use${Login}Mutation`
 // Login is the name of the endpoint and Mutation is the method being used
-export const { useLoginMutation, useLogoutMutation } = userApiSlice
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation } = userApiSlice
