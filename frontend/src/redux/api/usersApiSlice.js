@@ -31,10 +31,18 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data
             })
+        }),
+
+        profile: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/profile`,
+                method: 'PUT',
+                body: data
+            })
         })
     })
 })
 
 // userLoginMutation is being used because of `use${Login}Mutation`
 // Login is the name of the endpoint and Mutation is the method being used
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } = userApiSlice
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useProfileMutation } = userApiSlice
