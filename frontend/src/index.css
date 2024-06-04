@@ -3,5 +3,11 @@
 @tailwind utilities;
 
 body {
-    background-color: rgb(28, 28, 28);
+    background: #0f0f10;
+    color: #fff;
+}
+
+input,
+textarea {
+    color: #000
 }

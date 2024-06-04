@@ -116,6 +116,10 @@ export const Navigation = () => {
                                 <li>
                                     <Link to='/admin/orderlist' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Orders</Link>
                                 </li>
+
+                                <li>
+                                    <Link to='/admin/userlist' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Users</Link>
+                                </li>
                             </>
                         )}
 

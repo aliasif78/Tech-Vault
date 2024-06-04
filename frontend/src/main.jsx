@@ -14,16 +14,22 @@ import PrivateRoute from './components/PrivateRoute.jsx'
 import Login from './pages/Auth/Login.jsx'
 import Register from './pages/Auth/Register.jsx'
 import Profile from './pages/User/Profile.jsx'
+import AdminRoutes from './pages/Admin/AdminRoutes.jsx'
+import UserList from './pages/Admin/UserList.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
+      <Route path='/login' element={<Login />}></Route>
+      <Route path='/register' element={<Register />}></Route>
+
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<Profile />}></Route>
       </Route>
 
-      <Route path='/login' element={<Login />}></Route>
-      <Route path='/register' element={<Register />}></Route>
+      {/* Admin Routes */}
+      <Route path='/admin' element={<AdminRoutes />}></Route>
+      <Route path='/admin/userlist' element={<UserList />}></Route>
     </Route>))
 
 ReactDOM.createRoot(document.getElementById('root')).render(

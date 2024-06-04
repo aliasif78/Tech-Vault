@@ -39,10 +39,44 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body: data
             })
+        }),
+
+        getUsers: builder.query({
+            query: (data) => ({
+                url: USERS_URL,
+            }),
+
+            providesTags: ['User'],
+            keepUnusedDataFor: 5
+        }),
+
+        deleteUser: builder.mutation({
+            query: (userid) => ({
+                url: `${USERS_URL}/${userid}`,
+                method: 'DELETE'
+            })
+        }),
+
+        getUserDetails: builder.query({
+            query: (id) => ({
+                url: `${USERS_URL}/${id}`
+            }),
+
+            keepUnusedDataFor: 5
+        }),
+
+        updateUser: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/${data.userId}`,
+                method: 'PUT',
+                body: data
+            }),
+
+            invalidatesTags: ["User"]
         })
     })
 })
 
 // userLoginMutation is being used because of `use${Login}Mutation`
 // Login is the name of the endpoint and Mutation is the method being used
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useProfileMutation } = userApiSlice
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useProfileMutation, useGetUsersQuery, useDeleteUserMutation, useGetUserDetailsQuery, useUpdateUserMutation } = userApiSlice
