@@ -11,6 +11,6 @@ router.route('/:categoryid')
     .delete(authenticate, authorizeAdmin, deleteCategory)
     .get(readCategory)
 
-router.route('/categories').get(listCategory)
+router.route('/categories/all').get(listCategory)
 
 export default router

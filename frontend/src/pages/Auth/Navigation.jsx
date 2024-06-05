@@ -110,7 +110,7 @@ export const Navigation = () => {
                                 </li>
 
                                 <li>
-                                    <Link to='/admin/categorylist' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Catrgories</Link>
+                                    <Link to='/admin/categorylist' className='block px-4 py-2 hover:bg-neutral-400 hover:text-black'>Categories</Link>
                                 </li>
 
                                 <li>
