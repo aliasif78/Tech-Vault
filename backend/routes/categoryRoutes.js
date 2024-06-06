@@ -5,7 +5,9 @@ const router = express.Router()
 
 import { authenticate, authorizeAdmin } from '../middlewares/authMiddleware.js'
 
+// Routes
 router.route('/').post(authenticate, authorizeAdmin, createCategory)
+
 router.route('/:categoryid')
     .put(authenticate, authorizeAdmin, updateCategory)
     .delete(authenticate, authorizeAdmin, deleteCategory)
