@@ -1,0 +1,4 @@
+/* To disable horizontal scrollbar for the whole page */
+body {
+    overflow-x: hidden;
+  }
