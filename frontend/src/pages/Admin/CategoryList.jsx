@@ -4,6 +4,7 @@ import { useCreateCategoryMutation, useDeleteCategoryMutation, useFetchCategorie
 import CategoryForm from "../../components/CategoryForm.jsx"
 import Modal from "../../components/Modal.jsx"
 import { deleteModel } from "mongoose"
+import AdminMenu from "./AdminMenu.jsx"
 
 const CategoryList = () => {
     const { data: categories } = useFetchCategoriesQuery()
@@ -100,7 +101,7 @@ const CategoryList = () => {
 
     return (
         <div className="ml-[10rem] flex flex-col md:flex-row">
-            {/* <AdminMenu /> */}
+            <AdminMenu />
 
             <div className="md:w-3/4 p-3">
                 <div className="h-20 text-4xl ml-[1rem] mt-[2rem]">Manage Categories</div>

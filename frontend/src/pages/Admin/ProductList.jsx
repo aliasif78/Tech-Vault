@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "react-toastify"
-import { useCreateProductMutation, useAddReviewMutation, useAllProductsQuery, useDeleteProductMutation, useGetNewProductsQuery, useGetProductByIdQuery, useGetProductDetailsQuery, useGetProductsQuery, useGetTopProductsMutation, useUpdateProductMutation, useUploadProductImageMutation } from '../../redux/api/productApiSlice.js'
+import { useCreateProductMutation, useUpdateProductMutation, useUploadProductImageMutation } from '../../redux/api/productApiSlice.js'
 import { useFetchCategoriesQuery } from '../../redux/api/categoryApiSlice.js'
 import './ProductList.css'
+import AdminMenu from "./AdminMenu.jsx"
 
 const ProductList = () => {
     const [image, setImage] = useState('')
@@ -47,7 +48,7 @@ const ProductList = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
             const productData = new FormData();
 
@@ -59,10 +60,10 @@ const ProductList = () => {
             productData.append('quantity', quantity);
             productData.append('brand', brand);
             productData.append('countInStock', stock);
-    
+
             const res = await createProduct(productData).unwrap();
             console.log('API response:', res);
-    
+
             if (res.error) {
                 toast.error(res.error);
             } else {
@@ -74,14 +75,14 @@ const ProductList = () => {
             toast.error('Failed to add product. Try Again.');
         }
     };
-    
+
 
     return (
         <div className="container xl:mx-[9rem] sm:mx-[0]">
             <div className="flex flex-col md:flex-row">
-                {/* <AdminMenu /> */}
+                <AdminMenu />
                 <div className="md:w-3/4 p-3">
-                    <div className="h-12">Create Product</div>
+                    <div className="h-16 text-3xl font-semibold">Create Product</div>
 
                     {imageURL && (
                         <div className="text-center">

@@ -18,6 +18,8 @@ import AdminRoutes from './pages/Admin/AdminRoutes.jsx'
 import UserList from './pages/Admin/UserList.jsx'
 import CategoryList from './pages/Admin/CategoryList.jsx'
 import ProductList from './pages/Admin/ProductList.jsx'
+import ProductUpdate from './pages/Admin/ProductUpdate.jsx'
+import AllProducts from './pages/Admin/AllProducts.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +36,8 @@ const router = createBrowserRouter(
       <Route path='/admin/userlist' element={<UserList />}></Route>
       <Route path='/admin/categorylist' element={<CategoryList />}></Route>
       <Route path='/admin/productlist' element={<ProductList />}></Route>
+      <Route path='/admin/product/allproducts' element={<AllProducts />}></Route>
+      <Route path='/admin/product/update/:_id' element={<ProductUpdate />}></Route>
     </Route>))
 
 ReactDOM.createRoot(document.getElementById('root')).render(

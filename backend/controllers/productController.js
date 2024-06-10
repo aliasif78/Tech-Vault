@@ -39,8 +39,8 @@ const addProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
     try {
-        const { name, description, price, category, quantity, brand } = req.fields
-
+        const { name, image, brand, quantity, description, category, price } = req.fields
+        
         // Validation Checks
         switch (true) {
             case !name:
