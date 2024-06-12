@@ -6,6 +6,7 @@ import { FaHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import './Navigation.css'
+import FavouritesCount from '../Products/FavouritesCount';
 
 // useSelector allows to access the Redux state
 import { useSelector, useDispatch } from 'react-redux'
@@ -80,12 +81,13 @@ export const Navigation = () => {
                     <span className="hidden nav-item-name">Cart</span>{" "}
                 </Link>
 
-                <Link to='/favourite' className='flex items-center transition-transform transform hover:translate-x-2'>
+                <Link to='/favourites' className='flex items-center transition-transform transform hover:translate-x-2'>
                     <div className="w-10 h-10 mr-2 flex justify-center items-center">
                         <FaHeart className='size-5' />
                     </div>
 
-                    <span className="hidden nav-item-name">Favourite</span>{" "}
+                    <span className="hidden nav-item-name">Favourites</span>{" "}
+                    <FavouritesCount />
                 </Link>
             </div>
 

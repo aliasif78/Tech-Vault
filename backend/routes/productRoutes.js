@@ -12,13 +12,13 @@ router.route('/')
     .get(getProducts)
 
 router.route('/allproducts').get(getAllProducts)
-router.route('/:id/reviews').post(authenticate, authorizeAdmin, checkId, addProductReview)
+router.route("/:id/reviews").post(authenticate, checkId, addProductReview);
 router.route('/top').get(getTopProducts)
 router.route('/new').get(getNewProducts)
 
 router.route('/:id')
     .put(authenticate, authorizeAdmin, ExpressFormidable(), updateProduct)
     .delete(authenticate, authorizeAdmin, ExpressFormidable(), deleteProduct)
-    .get(authenticate, authorizeAdmin, getProductById)
+    .get(authenticate, getProductById)
 
 export default router

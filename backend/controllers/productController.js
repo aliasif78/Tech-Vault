@@ -136,6 +136,7 @@ const getProducts = asyncHandler(async (req, res) => {
 })
 
 const addProductReview = asyncHandler(async (req, res) => {
+    console.log('controller')
     try {
         const { rating, comment } = req.body
         const product = await Product.findById(req.params.id)
