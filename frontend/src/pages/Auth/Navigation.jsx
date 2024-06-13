@@ -17,6 +17,7 @@ export const Navigation = () => {
     const userInfo = useSelector(state => state.auth)
     const [dropDownOpen, setDropDownOpen] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
+    const { cartItems } = useSelector((state => state.cart))
 
     const toggleDropDown = () => {
         setDropDownOpen(!dropDownOpen)
@@ -78,7 +79,18 @@ export const Navigation = () => {
                         <AiOutlineShoppingCart className='size-5' />
                     </div>
 
+                    <div className="relative -top-3 right-5">
+                        {cartItems.length > 0 && (
+                            <span>
+                                <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
+                                    {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                                </span>
+                            </span>
+                        )}
+                    </div>
+
                     <span className="hidden nav-item-name">Cart</span>{" "}
+
                 </Link>
 
                 <Link to='/favourites' className='flex items-center transition-transform transform hover:translate-x-2'>

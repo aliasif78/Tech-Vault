@@ -40,7 +40,7 @@ const addProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
     try {
         const { name, image, brand, quantity, description, category, price } = req.fields
-        
+
         // Validation Checks
         switch (true) {
             case !name:
@@ -140,7 +140,7 @@ const addProductReview = asyncHandler(async (req, res) => {
     try {
         const { rating, comment } = req.body
         const product = await Product.findById(req.params.id)
-        
+
         if (product) {
             const alreadyReviewed = product.reviews.find((r) => r.user.toString() === req.user._id.toString())
 
@@ -158,10 +158,10 @@ const addProductReview = asyncHandler(async (req, res) => {
 
             product.reviews.push(review)
             product.numReviews = product.reviews.length
-            product.rating = product.reviews.reduce((acc, item)=>item.rating + acc, 0) / product.reviews.length
+            product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length
 
             await product.save()
-            res.status(201).json({message: "Review Added"})
+            res.status(201).json({ message: "Review Added" })
         }
 
         else {
@@ -178,8 +178,8 @@ const addProductReview = asyncHandler(async (req, res) => {
 
 const getTopProducts = asyncHandler(async (req, res) => {
     try {
-        const products = await Product.find({}).sort({rating: -1}).limit(4)
-        res.json(products)        
+        const products = await Product.find({}).sort({ rating: -1 }).limit(4)
+        res.json(products)
     }
 
     catch (error) {
@@ -190,8 +190,8 @@ const getTopProducts = asyncHandler(async (req, res) => {
 
 const getNewProducts = asyncHandler(async (req, res) => {
     try {
-        const products = await Product.find({}).sort({_id: -1}).limit(5)
-        res.json(products)        
+        const products = await Product.find({}).sort({ _id: -1 }).limit(5)
+        res.json(products)
     }
 
     catch (error) {
@@ -200,4 +200,25 @@ const getNewProducts = asyncHandler(async (req, res) => {
     }
 })
 
-export { addProduct, updateProduct, deleteProduct, getProducts, getProductById, getAllProducts, addProductReview, getTopProducts, getNewProducts }
+const filterProducts = asyncHandler(async (req, res) => {
+    try {
+        const { checked, radio } = req.body
+        let args = {}
+
+        if (checked.length > 0)
+            args.category = checked
+
+        if (radio.length)
+            args.price = { $gte: radio[0], $lte: radio[1] }
+
+        const products = await Product.find(args)
+        res.json(products)
+    }
+
+    catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "Server Error" })
+    }
+})
+
+export { addProduct, updateProduct, deleteProduct, getProducts, getProductById, getAllProducts, addProductReview, getTopProducts, getNewProducts, filterProducts }
