@@ -6,6 +6,7 @@ import { Route, RouterProvider, createRoutesFromElements } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './redux/store.js'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 // Private Route
 import PrivateRoute from './components/PrivateRoute.jsx'
@@ -25,6 +26,11 @@ import Favourites from './pages/Products/Favourites.jsx'
 import ProductDetails from './pages/Products/ProductDetails.jsx'
 import Cart from './pages/Cart.jsx'
 import Shop from './pages/Shop.jsx'
+import Shipping from './pages/Orders/Shipping.jsx'
+import PlaceOrder from './pages/Orders/PlaceOrder.jsx'
+import Order from './pages/Orders/Order.jsx'
+import UserOrders from './pages/Orders/UserOrders.jsx'
+import OrderList from './pages/Admin/OrderList.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,9 +42,13 @@ const router = createBrowserRouter(
       <Route path='/product/:id' element={<ProductDetails />}></Route>
       <Route path='/cart' element={<Cart />}></Route>
       <Route path='/shop' element={<Shop />}></Route>
+      <Route path='/user-orders' element={<UserOrders />}></Route>
 
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<Profile />}></Route>
+        <Route path='/shipping' element={<Shipping />}></Route>
+        <Route path='/placeorder' element={<PlaceOrder />}></Route>
+        <Route path='/order/:id' element={<Order />}></Route>
       </Route>
 
       {/* Admin Routes */}
@@ -46,6 +56,7 @@ const router = createBrowserRouter(
       <Route path='/admin/userlist' element={<UserList />}></Route>
       <Route path='/admin/categorylist' element={<CategoryList />}></Route>
       <Route path='/admin/productlist' element={<ProductList />}></Route>
+      <Route path='/admin/orderlist' element={<OrderList />}></Route>
       <Route path='/admin/product/allproducts' element={<AllProducts />}></Route>
       <Route path='/admin/product/update/:_id' element={<ProductUpdate />}></Route>
     </Route>))
@@ -53,7 +64,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
+      <PayPalScriptProvider>
       <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
 )
